@@ -4,22 +4,17 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/lodash"></script>
     <script src="./alerting.js"></script>
     <link href="./alerting.css" rel="stylesheet">
 </head>
 
-<body>
-    <!--div class="alerting-mask"></div>
+<body class="alerting-notObject-modal">
 
-<div class="alerting-modal">
-    <div class="alerting-container">
-    hi
-    </div>
-    
-</div-->
-
-    outer
-    <button style="padding:1em" onclick="test()">have a try</button>
+    <h1>Alerting.js</h1>
+    <p>A slight,optional alert function based on promise.</p>
+    <button style="padding:1em;width:100%;" onclick="test()">TRY IT OUT</button>
+    <h1>Preview default style</h1>
     <button class="alerting-cancel">cancel btn</button>
     <button class="alerting-confirm">confirm btn</button>
 
@@ -33,24 +28,35 @@
         ⤛ ⤜ ⥼ ⥽ ⥾ ⥿ ⤼ ⤽ ⤾ ⤿ ⤸ ⤺ ⤹ ⤻ ⥀ ⥁ ⟲ ⟳ </p>
 
 
-        
+
     <script>
 
 
         const alertingTestObject = {
-            content: `<h1>hi,this will close automatically in 5s</h1>
-            <input id="my_input" type="date">
+            content: `
+            <p style="color:#000;font-size:1.2em;font-weight:700">TITLE</p>
+            <div style="border-bottom:1px solid grey;width:100%"></div>
+            <p>
+                Hi,this will close automatically in 5s<br>
+                Be careful,when convey a same Object to alerting,you may need <code>_.cloneDeep</code> function,or something similar
+            </p>
+            <span>selector:  </span>
+            <select id="my_input">
+                <option>1.YOU SELECTED THIS!IT IS NUMBER ONE~</option>
+                <option>2.YOU SELECTED THIS!IT IS NUMBER TWO~</option>
+                <option>3.YOU SELECTED THIS!IT IS NUMBER THREE~</option>
+            </select>
             <br>
             `,
             style: {//optional
-                container: `padding:1em`,
-                modal: `width:80%;min-height:50%`
+                container: `padding:1em;color:#333`,
+                modal: `width:80%`
             },
             buttons: {//optional
                 one: {
                     content: `<i>get value,after selecting</i>`,
                     data: () => document.getElementById('my_input').value,
-                    style: `color:#ccc`,
+                    style: `background:lightsteelblue`,
                     class: `alerting-confirm`
                 },
                 two: {
@@ -58,20 +64,30 @@
                     class: `alerting-cancel`,
                     close: false
                 },
+                confirm: {
+                    style:`float:right`,
+                    content: `default confirm`
+                },
                 cancel: {
-                    content: `system name`
+                    style:`float:right`,
+                    content: `default cancel`
                 }
             },
             elements: {//optional
                 div: () => {
                     let divEle = document.createElement("div")
-                    divEle.innerHTML = `<b>this is a b element, in a div element</b>`
+                    divEle.innerHTML = `<mark>this is a mark element, in a div element</mark>`
                     return divEle
                 },
-                h5: (function () {
-                    let h5Ele = document.createElement("h5")
-                    h5Ele.innerHTML = `this is a h5 element`
+                h3: (function () {
+                    let h5Ele = document.createElement("h3")
+                    h5Ele.innerHTML = `this is a h3 element`
                     return h5Ele
+                }()),
+                hr: (function () {
+                    let hrEle = document.createElement("div")
+                    hrEle.style.cssText='border-bottom:1px solid grey;width:100%;margin-bottom:0.5em'
+                    return hrEle
                 }()),
                 close //add this to get a close button
             },
@@ -80,10 +96,15 @@
 
 
         function test() {
-            alerting(alertingTestObject).then(value => {
+            alerting(_.cloneDeep(alertingTestObject)).then(value => {
+                if(!value){
+                    alerting(`You haven't selected a value yet!`)
+                    return undefined
+                }
                 alerting(value)
             })
         }
+
     </script>
 </body>
 

@@ -23,7 +23,6 @@ function alerting(options, callback) {
             if ("style" in options) {
                 modal.style.cssText = options.style.modal
                 container.style.cssText = options.style.container
-                modal.style.cssText = options.style.modal
             }
 
 
