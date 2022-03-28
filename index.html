@@ -1,104 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta charset="utf-8" />
-        <script src="https://cdn.jsdelivr.net/npm/lodash"></script>
-        <script src="./alerting.js"></script>
-        <link href="./alerting.css" rel="stylesheet" />
+        <title>Alerting.js</title>
+        <link rel="stylesheet" href="./dist/alerting.css" />
+        <script src="./dist/alerting.js"></script>
     </head>
-
-    <body class="alerting-notObject-modal">
-        <h1>Alerting.js</h1>
-        <p>A slight,optional alert function based on promise.</p>
-        <button style="padding: 1em; width: 100%;" onclick="test()">TRY IT OUT</button>
-        <h1>Preview default style</h1>
-        <button class="alerting-cancel">cancel btn</button>
-        <button class="alerting-confirm">confirm btn</button>
-
-        <p>
-            ↕ ↖ ↗ ↘ ↙ ↚ ↛ ↜ ↝ ↞ ↟ ↠ ↡ ↢ ↣ ↤ ↥ ↦ ↧ ↨ ↩ ↪ ↫ ↬ ↭ ↮ ↯ ↰ ↱ ↲ ↳ ↴ ↶ ↷ ↸ ↹ ↺ ↻ ↼ ↽ ↾ ↿ ⇀ ⇁ ⇂ ⇃ ⇄ ⇅ ⇆ ⇇ ⇈ ⇉ ⇊ ⇋ ⇌ ⇍ ⇎ ⇏ ⇕ ⇖ ⇗ ⇘ ⇙ ⇚ ⇛ ⇜ ⇝ ⇞ ⇟ ⇠ ⇡ ⇢ ⇣ ⇤
-            ⇥ ⇦ ⇧ ⇨ ⇩ ⇪ ⌅ ⌆ ⌤ ⏎ ▶ ☇ ☈ ☊ ☋ ☌ ☍ ➔ ➘ ➙ ➚ ➛ ➜ ➝ ➞ ➟ ➠ ➡ ➢ ➣ ➤ ➥ ➦ ➧ ➨ ➩ ➪ ➫ ➬ ➭ ➮ ➯ ➱ ➲ ➳ ➴ ➵ ➶ ➷ ➸ ➹ ➺ ➻ ➼ ➽ ➾ ⤴ ⤵ ↵ ↓ ↔ ← → ↑ ⌦ ⌫ ⌧ ⇰ ⇫ ⇬ ⇭ ⇳ ⇮ ⇯
-            ⇱ ⇲ ⇴ ⇵ ⇷ ⇸ ⇹ ⇺ ⇑ ⇓ ⇽ ⇾ ⇿ ⬳ ⟿ ⤉ ⤈ ⇻ ⇼ ⬴ ⤀ ⬵ ⤁ ⬹ ⤔ ⬺ ⤕ ⬶ ⤅ ⬻ ⤖ ⬷ ⤐ ⬼ ⤗ ⬽ ⤘ ⤝ ⤞ ⤟ ⤠ ⤡ ⤢ ⤣ ⤤ ⤥ ⤦ ⤪ ⤨ ⤧ ⤩ ⤭ ⤮ ⤯ ⤰ ⤱ ⤲ ⤫ ⤬ ⬐ ⬎ ⬑ ⬏ ⤶ ⤷ ⥂ ⥃ ⥄ ⭀ ⥱ ⥶ ⥸ ⭂ ⭈
-            ⭊ ⥵ ⭁ ⭇ ⭉ ⥲ ⭋ ⭌ ⥳ ⥴ ⥆ ⥅ ⥹ ⥻ ⬰ ⥈ ⬾ ⥇ ⬲ ⟴ ⥷ ⭃ ⥺ ⭄ ⥉ ⥰ ⬿ ⤳ ⥊ ⥋ ⥌ ⥍ ⥎ ⥏ ⥐ ⥑ ⥒ ⥓ ⥔ ⥕ ⥖ ⥗ ⥘ ⥙ ⥚ ⥛ ⥜ ⥝ ⥞ ⥟ ⥠ ⥡ ⥢ ⥤ ⥣ ⥥ ⥦ ⥨ ⥧ ⥩ ⥮ ⥯ ⥪ ⥬ ⥫ ⥭ ⤌ ⤍ ⤎ ⤏ ⬸ ⤑ ⬱ ⟸
-            ⟹ ⟺ ⤂ ⤃ ⤄ ⤆ ⤇ ⤊ ⤋ ⭅ ⭆ ⟰ ⟱ ⇐ ⇒ ⇔ ⇶ ⟵ ⟶ ⟷ ⬄ ⬀ ⬁ ⬂ ⬃ ⬅ ⬆ ⬇ ⬈ ⬉ ⬊ ⬋ ⬌ ⬍ ⟻ ⟼ ⤒ ⤓ ⤙ ⤚ ⤛ ⤜ ⥼ ⥽ ⥾ ⥿ ⤼ ⤽ ⤾ ⤿ ⤸ ⤺ ⤹ ⤻ ⥀ ⥁ ⟲ ⟳
-        </p>
-
-        <script>
-            const alertingTestObject = {
-                content: `
-            <p style="color:#000;font-size:1.2em;font-weight:700">TITLE</p>
-            <div style="border-bottom:1px solid grey;width:100%"></div>
-            <p>
-                Hi, this window will be closed automatically in 5s<br>
-                Be careful that when conveying the same Object to alerting, you may need <code>_.cloneDeep</code> function, or something similar
-            </p>
-            <span>selector:  </span>
-            <select id="my_input">
-                <option>Apple</option>
-                <option>Peach</option>
-                <option>Orange</option>
-            </select>
-            <br>
-            `,
-                style: {
-                    //optional
-                    container: `padding:1em;color:#333`,
-                    modal: `width:80%`,
-                },
-                buttons: {
-                    //optional
-                    one: {
-                        content: `<i>get value, after selecting</i>`,
-                        data: () => document.getElementById('my_input').value,
-                        style: `background:lightsteelblue`,
-                        class: `alerting-confirm`,
-                    },
-                    two: {
-                        content: `this button won't make it closed`,
-                        class: `alerting-cancel`,
-                        close: false,
-                    },
-                    confirm: {
-                        style: `float:right`,
-                        content: `default confirm`,
-                    },
-                    cancel: {
-                        style: `float:right`,
-                        content: `default cancel`,
-                    },
-                },
-                elements: {
-                    //optional
-                    div: () => {
-                        let divEle = document.createElement('div');
-                        divEle.innerHTML = `<mark>this is a mark element, in a div element</mark>`;
-                        return divEle;
-                    },
-                    h3: (function () {
-                        let h3Ele = document.createElement('h3');
-                        h3Ele.innerHTML = `this is a h3 element`;
-                        return h3Ele;
-                    })(),
-                    hr: (function () {
-                        let hrEle = document.createElement('div');
-                        hrEle.style.cssText = 'border-bottom:1px solid grey;width:100%;margin-bottom:0.5em';
-                        return hrEle;
-                    })(),
-                    close, //add this to get a close button
-                },
-                timeout: 5000, //optional
-            };
-
-            function test() {
-                alerting(_.cloneDeep(alertingTestObject)).then(value => {
-                    if (!value) {
-                        alerting(`You haven't selected a value yet!`);
-                        return undefined;
-                    }
-                    alerting(value);
-                });
-            }
-        </script>
-    </body>
+    <body></body>
 </html>

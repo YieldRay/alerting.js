@@ -1,18 +1,16 @@
 # alerting.js
 
-A slight,optional alert function based on promise.
-Inspired by SweetAlert, for any normal situation, strongly recommend.
+implement alert, confirm, prompt with Promise
 
-# Usage
+## dev
 
-```html
-<script src="./alerting.js"></script>
-<link href="./alerting.css" rel="stylesheet" />
+```bash
+$ npm run dev:js
+$ npm run dev:css
 ```
 
-with cdn
+## build
 
-```html
-<script src="https://cdn.jsdelivr.net/gh/Crazy-White/alerting.js/alerting.min.js"></script>
-<link href="https://cdn.jsdelivr.net/gh/Crazy-White/alerting.js/alerting.min.css" rel="stylesheet" />
+```bash
+$ npm run build
 ```

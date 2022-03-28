@@ -1,0 +1,31 @@
+{
+    "name": "alerting.js",
+    "version": "0.1.0",
+    "description": "a css library like sweetAlert",
+    "main": "./dist/alerting.js",
+    "scripts": {
+        "dev:css": "sass --watch src:dist",
+        "dev:js": "tsc -w",
+        "build": "sass src:dist --no-source-map && postcss ./dist/*.css -d ./dist && tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/YieldRay/alerting.js.git"
+    },
+    "keywords": [],
+    "author": "YieldRay",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/YieldRay/alerting.js/issues"
+    },
+    "homepage": "https://github.com/YieldRay/alerting.js#readme",
+    "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "cssnano": "^5.0.15",
+        "postcss": "^8.4.5",
+        "postcss-cli": "^9.1.0",
+        "postcss-preset-env": "^7.2.0",
+        "sass": "^1.47.0",
+        "typescript": "^4.6.3"
+    }
+}
