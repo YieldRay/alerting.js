@@ -1,14 +1,16 @@
-abstract class Module {
+abstract class Model {
     protected mask = document.createElement("div");
+    protected model = document.createElement("div");
     constructor() {
         this.mask.className = "alerting-mask";
+        this.model.className = "alerting-model";
     }
     public abstract open(): void;
     public abstract close(): void;
     public abstract wait(): Promise<any>;
 }
 
-class Alert extends Module {
+class Alert extends Model {
     constructor(message: string) {
         super();
     }
@@ -20,7 +22,8 @@ class Alert extends Module {
     }
     public async wait(): Promise<void> {}
 }
-class Prompt extends Module {
+
+class Prompt extends Model {
     constructor(text: string, value?: string) {
         super();
     }
@@ -34,7 +37,8 @@ class Prompt extends Module {
         return "";
     }
 }
-class Confirm extends Module {
+
+class Confirm extends Model {
     constructor(message: string) {
         super();
     }
