@@ -6,14 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Alerting.js</title>
         <link rel="stylesheet" href="./dist/alerting.css" />
-        <script src="./dist/alerting.js"></script>
+        <script type="module">
+            import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+            window.alerting = {
+                alert(message) {
+                    return new Alert(message).makeMaskUnclickable().wait();
+                },
+                confirm(message) {
+                    return new Confirm(message).makeMaskUnclickable().wait();
+                },
+                prompt(text, value) {
+                    return new Prompt(text, value).makeMaskUnclickable().wait();
+                },
+            };
+            // alerting.alert();
+            // const isConfirm = await alerting.confirm("Do you like this?");
+            // const feedback = await alerting.prompt("Do you like this?", "yes!");
+        </script>
     </head>
     <body>
-        <div class="alerting-mask"></div>
+        <!-- <div class="alerting-mask"></div>
         <div class="alerting-model">
-            <strong class="alerting-title">
-                来自localhost
-            </strong>
+            <div class="alerting-title">localhost 显示</div>
             <div class="alerting-content">
                 <span>hello</span>
             </div>
@@ -22,6 +36,11 @@
                 <button class="alerting-button-confirm">Yes</button>
                 <button class="alerting-button-cancel">No</button>
             </div>
-        </div>
+        </div> -->
+        <h1>Alerting.js</h1>
+        <p>Quickly glance</p>
+        <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
+        <button onclick="alerting.confirm('Do you like this?')">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?')">prompt</button>
     </body>
 </html>

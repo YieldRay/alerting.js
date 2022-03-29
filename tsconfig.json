@@ -6,7 +6,6 @@
         "sourceMap": true,
         "declarationDir": "dist",
         "outDir": "dist",
-        "importHelpers": true,
         "removeComments": true,
         "experimentalDecorators": true,
         "skipLibCheck": true,
