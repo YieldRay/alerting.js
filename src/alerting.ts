@@ -1,46 +1,59 @@
 class Model {
     // the Model has: title, content, buttons
-    protected isMaskClickable = true;
-    protected mask = document.createElement("div");
-    protected model = document.createElement("div");
-    protected title = document.createElement("div");
-    protected content = document.createElement("div");
-    protected buttons = document.createElement("div");
+    protected _isMaskClickable = true;
+    protected _mask = document.createElement("div");
+    protected _model = document.createElement("div");
+    protected _title = document.createElement("div");
+    protected _content = document.createElement("div");
+    protected _buttons = document.createElement("div");
+    protected _display: any = {
+        language: navigator.language.startsWith("zh") ? "zh" : "en",
+        en: {
+            says: "says",
+            confirm: "OK",
+            cancel: "cancel",
+        },
+        zh: {
+            says: "显示",
+            confirm: "确认",
+            cancel: "取消",
+        },
+    };
     constructor() {
-        this.mask.className = "alerting-mask";
-        this.model.className = "alerting-model";
-        this.title.className = "alerting-title";
-        this.content.className = "alerting-content";
-        this.buttons.className = "alerting-buttons";
-        this.title.innerHTML = location.host + " " + "显示";
-        this.model.appendChild(this.title);
-        this.model.appendChild(this.content);
-        this.model.appendChild(this.buttons);
+        this._mask.className = "alerting-mask";
+        this._model.className = "alerting-model";
+        this._title.className = "alerting-title";
+        this._content.className = "alerting-content";
+        this._buttons.className = "alerting-buttons";
+        this._title.innerHTML = location.host + " " + this._display[this._display.language].says;
+        this._model.appendChild(this._title);
+        this._model.appendChild(this._content);
+        this._model.appendChild(this._buttons);
     }
     public makeMaskUnclickable() {
-        this.isMaskClickable = false;
+        this._isMaskClickable = false;
         return this;
     }
     public setTitle(title: string) {
-        this.title.innerHTML = title;
+        this._title.innerHTML = title;
     }
     // as the Model is the Principal, only Model is listening to the event
     protected open(): Promise<void> {
-        document.body.appendChild(this.mask);
-        document.body.appendChild(this.model);
+        document.body.appendChild(this._mask);
+        document.body.appendChild(this._model);
         return new Promise<void>((resolve) => {
-            this.model.addEventListener("animationend", () => {
+            this._model.addEventListener("animationend", () => {
                 resolve();
             });
         });
     }
     protected close(): Promise<void> {
-        this.mask.classList.add("alerting-animation-close");
-        this.model.classList.add("alerting-animation-close");
+        this._mask.classList.add("alerting-animation-close");
+        this._model.classList.add("alerting-animation-close");
         return new Promise<void>((resolve) => {
-            this.model.addEventListener("animationend", () => {
-                this.model.remove();
-                this.mask.remove();
+            this._model.addEventListener("animationend", () => {
+                this._model.remove();
+                this._mask.remove();
                 resolve();
             });
         });
@@ -51,17 +64,21 @@ class Model {
 class Alert extends Model {
     constructor(message: string = "") {
         super();
-        this.content.innerHTML = message;
+        this._content.innerHTML = message;
+    }
+    public config(message: string = ""): Alert {
+        this._content.innerHTML = message;
+        return this;
     }
     public async wait(): Promise<void> {
         this.open();
         const buttonConfirm = document.createElement("button");
-        buttonConfirm.innerHTML = "确定";
+        buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         buttonConfirm.className = "alerting-button-confirm";
-        this.buttons.appendChild(buttonConfirm);
+        this._buttons.appendChild(buttonConfirm);
         return await new Promise((resolve) => {
-            if (this.isMaskClickable) {
-                this.mask.addEventListener("click", async () => {
+            if (this._isMaskClickable) {
+                this._mask.addEventListener("click", async () => {
                     await this.close();
                     resolve();
                 });
@@ -77,21 +94,25 @@ class Alert extends Model {
 class Confirm extends Model {
     constructor(message: string = "") {
         super();
-        this.content.innerHTML = message;
+        this._content.innerHTML = message;
+    }
+    public config(message: string = ""): Confirm {
+        this._content.innerHTML = message;
+        return this;
     }
     public async wait(): Promise<boolean> {
         this.open();
         const buttonConfirm = document.createElement("button");
-        buttonConfirm.innerHTML = "确定";
+        buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         buttonConfirm.className = "alerting-button-confirm";
         const buttonCancel = document.createElement("button");
-        buttonCancel.innerHTML = "取消";
+        buttonCancel.innerHTML = this._display[this._display.language].cancel;
         buttonCancel.className = "alerting-button-cancel";
-        this.buttons.appendChild(buttonConfirm);
-        this.buttons.appendChild(buttonCancel);
+        this._buttons.appendChild(buttonConfirm);
+        this._buttons.appendChild(buttonCancel);
         return await new Promise((resolve) => {
-            if (this.isMaskClickable) {
-                this.mask.addEventListener("click", async () => {
+            if (this._isMaskClickable) {
+                this._mask.addEventListener("click", async () => {
                     await this.close();
                     resolve(false);
                 });
@@ -112,21 +133,26 @@ class Prompt extends Model {
     protected input = document.createElement("input");
     constructor(text: string = "", value?: string) {
         super();
-        this.content.innerHTML = text;
+        this._content.innerHTML = text;
         this.input.className = "alerting-input";
         this.input.value = value || "";
-        this.content.appendChild(this.input);
+        this._content.appendChild(this.input);
+    }
+    public config(text: string = "", value?: string): Prompt {
+        this._content.innerHTML = text;
+        this.input.value = value || "";
+        return this;
     }
     public async wait(): Promise<string | null> {
         this.open();
         const buttonConfirm = document.createElement("button");
-        buttonConfirm.innerHTML = "确定";
+        buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         buttonConfirm.className = "alerting-button-confirm";
         const buttonCancel = document.createElement("button");
-        buttonCancel.innerHTML = "取消";
+        buttonCancel.innerHTML = this._display[this._display.language].cancel;
         buttonCancel.className = "alerting-button-cancel";
-        this.buttons.appendChild(buttonConfirm);
-        this.buttons.appendChild(buttonCancel);
+        this._buttons.appendChild(buttonConfirm);
+        this._buttons.appendChild(buttonCancel);
         // after the button is available, the input can be focused
         this.input.focus();
         this.input.select();
@@ -135,9 +161,9 @@ class Prompt extends Model {
                 buttonConfirm.click();
             }
         });
-        return await new Promise((resolve) => {
-            if (this.isMaskClickable) {
-                this.mask.addEventListener("click", async () => {
+        return await new Promise<string | null>((resolve) => {
+            if (this._isMaskClickable) {
+                this._mask.addEventListener("click", async () => {
                     await this.close();
                     resolve(null);
                 });

@@ -8,17 +8,22 @@
         <link rel="stylesheet" href="./dist/alerting.css" />
         <script type="module">
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
-            window.alerting = {
-                alert(message) {
-                    return new Alert(message).makeMaskUnclickable().wait();
+            const alert = new Alert();
+            const confirm = new Confirm();
+            const prompt = new Prompt();
+            // only instantiate once, reduce create and destroy DOM
+            const alerting = {
+                async alert(msg) {
+                    return await alert.config(msg).wait();
                 },
-                confirm(message) {
-                    return new Confirm(message).makeMaskUnclickable().wait();
+                async confirm(msg) {
+                    return await confirm.config(msg).wait();
                 },
-                prompt(text, value) {
-                    return new Prompt(text, value).makeMaskUnclickable().wait();
+                async prompt(text, value) {
+                    return await prompt.config(text, value).wait();
                 },
             };
+            window.alerting = alerting;
             // alerting.alert();
             // const isConfirm = await alerting.confirm("Do you like this?");
             // const feedback = await alerting.prompt("Do you like this?", "yes!");
