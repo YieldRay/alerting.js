@@ -51,26 +51,20 @@ class Model {
         this._model.appendChild(this._content);
         this._model.appendChild(this._buttons);
     }
-    // public on(eventName: string, listener: EventListenerOrEventListenerObject): void {
-    //     this._events.on(eventName, listener);
-    // }
-    // public off(eventName: string, listener: EventListenerOrEventListenerObject): void {
-    //     this._events.off(eventName, listener);
-    // }
-    // public emit(eventName: string, data?: any): boolean {
-    //     return this._events.emit(eventName, { detail: data });
-    // }
+
     public makeMaskUnclickable() {
         this._isMaskClickable = false;
         return this;
     }
+
     public setTitle(title: string) {
         this._title.innerHTML = title;
     }
+
     // as the Model is the Principal, only Model is listening to the event
-    protected open(): Promise<boolean> {
+    protected open(): Promise<void> {
         // TODO: rewrite with display:none may be better
-        if (this._isOpen) return Promise.resolve(false);
+        if (this._isOpen) this.forceClose();
         this.emit("beforeOpen");
         this._mask.classList.remove("alerting-animation-close");
         this._model.classList.remove("alerting-animation-close");
@@ -81,7 +75,7 @@ class Model {
             setTimeout(() => {
                 this._isOpen = true;
                 this.emit("afterOpen");
-                resolve(true);
+                resolve();
             }, animationDuration);
         });
     }
