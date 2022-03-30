@@ -7,6 +7,8 @@
         <title>Alerting.js</title>
         <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
         <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
+        <!-- <link rel="stylesheet" href="./dist/alerting.css" />
+        <script src="./dist/alerting.umd.min.js"></script> -->
         <script type="module">
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
             const alert = new Alert().makeMaskUnclickable();
@@ -22,7 +24,7 @@
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
         <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
-        <button onclick="alerting.confirm('Do you like this?').then(e=>_alert('You selected: '+e))">confirm</button>
-        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>_alert('You entered: '+e))">prompt</button>
+        <button onclick="alerting.confirm('Do you like this?').then(e=>$$alert('You selected: '+e))">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>$$alert('You entered: '+e))">prompt</button>
     </body>
 </html>
