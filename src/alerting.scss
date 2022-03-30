@@ -109,7 +109,7 @@
     animation: alerting-fade-in 0.2s;
 }
 .alerting-animation-close{
-    animation: alerting-fade-out 0.2s;
+    animation: alerting-fade-out 0.2s forwards;
 }
 @keyframes alerting-fade-in {
     from {
