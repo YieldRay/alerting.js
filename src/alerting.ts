@@ -68,6 +68,7 @@ class Model {
             }, animationDuration);
         });
     }
+
     protected _close(): Promise<boolean> {
         if (!this._isOpen) return Promise.resolve(false);
         this._emit("beforeClose");
@@ -76,8 +77,6 @@ class Model {
             this._model.classList.add("alerting-animation-close");
             // this._model.addEventListener("animationend", () => {
             setTimeout(() => {
-                // window.document.body.removeChild(this._model);
-                // window.document.body.removeChild(this._mask);
                 this._model.remove();
                 this._mask.remove();
                 this._isOpen = false;
@@ -253,7 +252,7 @@ const prompt = (text: string, value?: string) => new Prompt(text, value).wait();
 // const _alert = (msg: string) => $alert.config(msg).wait();
 // const _confirm = (msg: string) => $confirm.config(msg).wait();
 // const _prompt = (text: string, value?: string) => $prompt.config(text, value).wait();
+// export { _alert, _confirm, _prompt };
 
 export { Alert, Confirm, Prompt };
 export { alert, confirm, prompt };
-// export { _alert, _confirm, _prompt };

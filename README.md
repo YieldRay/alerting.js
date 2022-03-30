@@ -8,8 +8,8 @@ import both css and js to use, if you don't like the default css, you can overwr
 DO NOT VISIT METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
-<link rel="stylesheet" href="./dist/alerting.css" />
-<script src="./dist/alerting.umd.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
+<script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
 <script>
     alerting.alert();
     alerting.prompt("Are you sure?").then(console.log);
