@@ -1,7 +1,7 @@
 {
     "name": "alerting.js",
     "version": "0.1.0",
-    "description": "a css library like sweetAlert",
+    "description": "implement alert, confirm, prompt with Promise",
     "main": "./dist/alerting.js",
     "scripts": {
         "dev:css": "sass --watch src:dist",

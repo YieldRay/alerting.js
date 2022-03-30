@@ -8,25 +8,16 @@
         <link rel="stylesheet" href="./dist/alerting.css" />
         <script type="module">
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
-            const _alert = new Alert().makeMaskUnclickable();
-            const _confirm = new Confirm().makeMaskUnclickable();
-            const _prompt = new Prompt().makeMaskUnclickable();
+            const alert = new Alert().makeMaskUnclickable();
+            const confirm = new Confirm().makeMaskUnclickable();
+            const prompt = new Prompt().makeMaskUnclickable();
             // only instantiate once, reduce create and destroy DOM
-            const alerting = {
-                _alert,
-                _confirm,
-                _prompt,
-                async alert(msg) {
-                    return await _alert.config(msg).wait();
-                },
-                async confirm(msg) {
-                    return await _confirm.config(msg).wait();
-                },
-                async prompt(text, value) {
-                    return await _prompt.config(text, value).wait();
-                },
-            };
-            window.alerting = alerting;
+            window._alert = (msg) => alert.config(msg).wait();
+            window._confirm = (msg) => confirm.config(msg).wait();
+            window._prompt = (text, value) => prompt.config(text, value).wait();
+            window.myAlert = (msg) => new Alert(msg).wait();
+            window.myConfirm = (msg) => new Confirm(msg).wait();
+            window.myPrompt = (text, value) => new Prompt(text, value).wait();
             // alerting.alert();
             // const isConfirm = await alerting.confirm("Do you like this?");
             // const feedback = await alerting.prompt("Do you like this?", "yes!");
@@ -47,8 +38,8 @@
         </div> -->
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
-        <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
-        <button onclick="alerting.confirm('Do you like this?')">confirm</button>
-        <button onclick="alerting.prompt('Give me some text!','hello?')">prompt</button>
+        <button onclick="_alert('Hello, alerting.js!')">alert</button>
+        <button onclick="_confirm('Do you like this?')">confirm</button>
+        <button onclick="_prompt('Give me some text!','hello?')">prompt</button>
     </body>
 </html>

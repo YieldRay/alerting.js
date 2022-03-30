@@ -52,15 +52,6 @@ class Model {
         this._model.appendChild(this._buttons);
     }
 
-    public makeMaskUnclickable() {
-        this._isMaskClickable = false;
-        return this;
-    }
-
-    public setTitle(title: string) {
-        this._title.innerHTML = title;
-    }
-
     // as the Model is the Principal, only Model is listening to the event
     protected open(): Promise<void> {
         // TODO: rewrite with display:none may be better
@@ -97,14 +88,30 @@ class Model {
             }, animationDuration);
         });
     }
+    /*
+     * @description make the model mask unable to clickable, chained calls this fucntion
+     */
+    public makeMaskUnclickable(): this {
+        this._isMaskClickable = false;
+        return this;
+    }
+
+    /*
+     * @description set the title of the model, if not set, the title will be the hostname just like the native style
+     */
+    public setTitle(title: string): this {
+        this._title.innerHTML = title;
+        return this;
+    }
     /**
      * @description force close and dispatch the event, the remaining await will receive default value instantly
      */
-    public forceClose(): void {
+    public forceClose(): this {
         this._model.remove();
         this._mask.remove();
         this._isOpen = false;
         this.emit("forceClose");
+        return this;
     }
 }
 
