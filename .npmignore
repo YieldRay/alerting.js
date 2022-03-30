@@ -1,0 +1,5 @@
+src/
+*.yaml
+*.config.js
+*.json
+*.html

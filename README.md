@@ -2,32 +2,33 @@
 
 implement alert, confirm, prompt with Promise
 
-## dev
-
-```bash
-$ npm run dev:js
-$ npm run dev:css
-```
-
-## build
-
-```bash
-$ npm run build
-```
-
 ## Usage
 
-```js
-import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+import both css and js to use, if you don't like the default css, you can overwrite it
 
+```html
+<link rel="stylesheet" href="./dist/alerting.css" />
+<script src="./dist/alerting.umd.min.js"></script>
+<script>
+    alerting.alert();
+    alerting.prompt("Are you sure?").then(console.log);
+    alerting.confirm("Choose your favorite number...", "0").then(console.log);
+</script>
+```
+
+import with es6 module, keep in mind that you also need css imported
+
+```js
 // each call will create an object, and each of them has a standalone DOM
 // every call will show a standalone model
-window.myAlert = (msg) => new Alert(msg).wait();
-window.myConfirm = (msg) => new Confirm(msg).wait();
-window.myPrompt = (text, value) => new Prompt(text, value).wait();
+import { alert as _alert, prompt as _prompt, confirm as _confirm } from "./dist/alerting.js";
+_alert();
+_prompt().then(console.log);
+_confirm().then(console.log);
 
 // only create single object, and each of them shares the same DOM
 // if called twice time, the former one will be forced close
+import { Alert, Prompt, Confirm } from "./dist/alerting.js";
 const alert = new Alert();
 const confirm = new Confirm();
 const prompt = new Prompt();
@@ -57,3 +58,16 @@ myModel.on("afterClose", () => console.log("after"));
 ```
 
 all the three Classes have the same API
+
+## build
+
+```bash
+$ npm run build
+```
+
+## dev
+
+```bash
+$ npm run dev:js
+$ npm run dev:css
+```

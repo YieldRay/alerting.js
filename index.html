@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Alerting.js</title>
         <link rel="stylesheet" href="./dist/alerting.css" />
+        <script src="./dist/alerting.umd.min.js"></script>
         <script type="module">
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
             const alert = new Alert().makeMaskUnclickable();
@@ -15,31 +16,13 @@
             window._alert = (msg) => alert.config(msg).wait();
             window._confirm = (msg) => confirm.config(msg).wait();
             window._prompt = (text, value) => prompt.config(text, value).wait();
-            window.myAlert = (msg) => new Alert(msg).wait();
-            window.myConfirm = (msg) => new Confirm(msg).wait();
-            window.myPrompt = (text, value) => new Prompt(text, value).wait();
-            // alerting.alert();
-            // const isConfirm = await alerting.confirm("Do you like this?");
-            // const feedback = await alerting.prompt("Do you like this?", "yes!");
         </script>
     </head>
     <body>
-        <!-- <div class="alerting-mask"></div>
-        <div class="alerting-model">
-            <div class="alerting-title">localhost 显示</div>
-            <div class="alerting-content">
-                <span>hello</span>
-            </div>
-            <input class="alerting-input" />
-            <div class="alerting-buttons">
-                <button class="alerting-button-confirm">Yes</button>
-                <button class="alerting-button-cancel">No</button>
-            </div>
-        </div> -->
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
-        <button onclick="_alert('Hello, alerting.js!')">alert</button>
-        <button onclick="_confirm('Do you like this?')">confirm</button>
-        <button onclick="_prompt('Give me some text!','hello?')">prompt</button>
+        <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
+        <button onclick="alerting.confirm('Do you like this?').then(e=>_alert('You selected: '+e))">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>_alert('You entered: '+e))">prompt</button>
     </body>
 </html>

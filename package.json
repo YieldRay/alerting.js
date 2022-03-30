@@ -6,7 +6,10 @@
     "scripts": {
         "dev:css": "sass --watch src:dist",
         "dev:js": "tsc -w",
-        "build": "sass src:dist --no-source-map && postcss ./dist/*.css -d ./dist && tsc"
+        "build": "npm run build:scss && tsc && npm run build:rollup && npm run minify",
+        "build:scss": "sass src:dist --no-source-map",
+        "build:rollup": "rollup dist/alerting.js --file dist/alerting.umd.js --format umd  --name 'alerting'",
+        "minify": "postcss dist/*.css -d ./dist --no-source-map && terser dist/alerting.umd.js -o dist/alerting.umd.min.js --compress ecma=2015,computed_props=false"
     },
     "repository": {
         "type": "git",
@@ -25,7 +28,9 @@
         "postcss": "^8.4.5",
         "postcss-cli": "^9.1.0",
         "postcss-preset-env": "^7.2.0",
+        "rollup": "^2.70.1",
         "sass": "^1.47.0",
+        "terser": "^5.12.1",
         "typescript": "^4.6.3"
     }
 }
