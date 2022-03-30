@@ -8,7 +8,7 @@
     z-index: 10;
 }
 
-.alerting-model {
+.alerting-modal {
     box-sizing: border-box;
     * {
         box-sizing: border-box;
@@ -22,7 +22,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     min-width: 40vw;
-    min-height: 10vh;
+    min-height: 5rem;
     max-width: 100vw;
     max-height: 100vh;
     overflow: auto;
@@ -32,29 +32,18 @@
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     z-index: 11;
-    .alerting-title {
+    > .alerting-title {
         font-weight: bold;
     }
-    .alerting-content {
+    > .alerting-content {
         min-height: 2rem;
         padding: 0.5rem 0;
     }
-    .alerting-input {
-        border: 1px #cccccc solid;
-        border-radius: 2px;
-        box-sizing: border-box;
-        width: 100%;
-        padding: 4px;
-        margin: 0.5rem 0;
-        transition: outline 0.1s;
-        &:focus {
-            outline: 2px grey solid;
-        }
-    }
-    .alerting-buttons {
+
+    > .alerting-buttons {
         display: flex;
         justify-content: flex-end;
-        button {
+        > button {
             &:not(:last-child) {
                 margin-right: 0.3rem;
             }
@@ -68,45 +57,70 @@
                 outline: 2px grey solid;
             }
         }
-        .alerting-button-confirm {
-            color: #f0f6fb;
-            background-color: #006bbdee;
-            &:hover {
-                background-color: #006bbd;
-            }
+    }
+    .alerting-input {
+        display: block;
+        border: 1px #cccccc solid;
+        border-radius: 2px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 4px;
+        margin: 0.5rem 0;
+        transition: outline 0.1s;
+        &:focus {
+            outline: 2px grey solid;
         }
-        .alerting-button-cancel {
-            color: #000;
-            background-color: #f6f6f6;
-            &:hover {
-                background-color: #f0f0f0ee;
-            }
+    }
+    .alerting-button-confirm {
+        color: #f0f6fb;
+        background-color: #006bbdee;
+        &:hover {
+            background-color: #006bbd;
+        }
+    }
+    .alerting-button-cancel {
+        color: #000;
+        background-color: #f6f6f6;
+        &:hover {
+            background-color: #f0f0f0ee;
         }
     }
 }
 
 @media screen and (max-width: 80rem) {
-    .alerting-model {
-        min-width: 60vw;
-        min-height: 20vh;
+    .alerting-modal {
+        min-width: 65vw;
     }
 }
 
 @media screen and (max-width: 60rem) {
-    .alerting-model {
-        min-width: 70vw;
-        min-height: 20vh;
+    .alerting-modal {
+        min-width: 75vw;
+        padding: 0.6rem;
+        > .alerting-buttons > button {
+            height: 1.85rem;
+            border-radius: 2px;
+            &:focus {
+                outline-width: 2px;
+                border-radius: 1px;
+                // mobile browser does not support border-radius with outline
+                // specify lower border-radius to make it more consistent
+            }
+        }
+        .alerting-input:focus {
+            outline-width: 1px;
+        }
     }
 }
 
 @media screen and (max-width: 48rem) {
-    .alerting-model {
-        min-width: 80vw;
-        min-height: 20vh;
+    .alerting-modal {
+        min-width: 85vw;
+        border-radius: 3px;
     }
 }
 
-.alerting-model,
+.alerting-modal,
 .alerting-mask {
     animation: alerting-fade-in 0.2s;
 }

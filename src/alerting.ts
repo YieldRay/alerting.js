@@ -13,12 +13,12 @@ class AlertingEvent {
     }
 }
 
-class Model {
-    // the Model has: title, content, buttons
+class Modal {
+    // the modal has: title, content, buttons
     protected _isOpen = false;
     protected _isMaskClickable = true;
     protected _mask = document.createElement("div");
-    protected _model = document.createElement("div");
+    protected _modal = document.createElement("div");
     protected _title = document.createElement("div");
     protected _content = document.createElement("div");
     protected _buttons = document.createElement("div");
@@ -27,13 +27,13 @@ class Model {
     public off = this._events.off.bind(this._events);
     protected _emit = this._events.emit.bind(this._events);
     protected _display: any = {
-        language: navigator.language.startsWith("zh") ? "zh" : "en",
+        language: new Set(["en", "zh-CN"]).has(navigator.language) ? navigator.language : "en",
         en: {
             says: "says",
             confirm: "OK",
             cancel: "Cancel",
         },
-        zh: {
+        "zh-CN": {
             says: "显示",
             confirm: "确认",
             cancel: "取消",
@@ -41,26 +41,26 @@ class Model {
     };
     constructor() {
         this._mask.className = "alerting-mask";
-        this._model.className = "alerting-model";
+        this._modal.className = "alerting-modal";
         this._title.className = "alerting-title";
         this._content.className = "alerting-content";
         this._buttons.className = "alerting-buttons";
         this._title.innerHTML = location.host + " " + this._display[this._display.language].says;
-        this._model.appendChild(this._title);
-        this._model.appendChild(this._content);
-        this._model.appendChild(this._buttons);
+        this._modal.appendChild(this._title);
+        this._modal.appendChild(this._content);
+        this._modal.appendChild(this._buttons);
     }
 
-    // as the Model is the Principal, only Model is listening to the event
+    // as the modal is the Principal, only modal is listening to the event
     protected _open(): Promise<void> {
         if (this._isOpen) this.forceClose();
         this._emit("beforeOpen");
         this._mask.classList.remove("alerting-animation-close");
-        this._model.classList.remove("alerting-animation-close");
+        this._modal.classList.remove("alerting-animation-close");
         return new Promise((resolve) => {
             document.body.appendChild(this._mask);
-            document.body.appendChild(this._model);
-            // this._model.addEventListener("animationend", () => {
+            document.body.appendChild(this._modal);
+            // this._modal.addEventListener("animationend", () => {
             setTimeout(() => {
                 this._isOpen = true;
                 this._emit("afterOpen");
@@ -74,10 +74,10 @@ class Model {
         this._emit("beforeClose");
         return new Promise((resolve) => {
             this._mask.classList.add("alerting-animation-close");
-            this._model.classList.add("alerting-animation-close");
-            // this._model.addEventListener("animationend", () => {
+            this._modal.classList.add("alerting-animation-close");
+            // this._modal.addEventListener("animationend", () => {
             setTimeout(() => {
-                this._model.remove();
+                this._modal.remove();
                 this._mask.remove();
                 this._isOpen = false;
                 this._emit("afterClose");
@@ -86,7 +86,7 @@ class Model {
         });
     }
     /*
-     * @description make the model mask unable to clickable, chained calls this fucntion
+     * @description make the modal mask unable to clickable, chained calls this fucntion
      */
     public makeMaskUnclickable(): this {
         this._isMaskClickable = false;
@@ -94,7 +94,7 @@ class Model {
     }
 
     /*
-     * @description set the title of the model, if not set, the title will be the hostname just like the native style
+     * @description set the title of the modal, if not set, the title will be the hostname just like the native style
      */
     public setTitle(title: string): this {
         this._title.innerHTML = title;
@@ -104,7 +104,7 @@ class Model {
      * @description force close and dispatch the event, the remaining await will receive default value instantly
      */
     public forceClose(): this {
-        this._model.remove();
+        this._modal.remove();
         this._mask.remove();
         this._isOpen = false;
         this._emit("forceClose");
@@ -112,7 +112,7 @@ class Model {
     }
 }
 
-class Alert extends Model {
+class Alert extends Modal {
     private _buttonConfirm = document.createElement("button");
     constructor(message: string = "") {
         super();
@@ -147,7 +147,7 @@ class Alert extends Model {
     }
 }
 
-class Confirm extends Model {
+class Confirm extends Modal {
     private _buttonConfirm = document.createElement("button");
     private _buttonCancel = document.createElement("button");
     constructor(message: string = "") {
@@ -189,7 +189,7 @@ class Confirm extends Model {
     }
 }
 
-class Prompt extends Model {
+class Prompt extends Modal {
     private _textNode = document.createTextNode("");
     private _input = document.createElement("input");
     private _buttonConfirm = document.createElement("button");

@@ -4,11 +4,12 @@ implement alert, confirm, prompt with Promise
 
 ## Usage
 
-import both css and js to use, if you don't like the default css, you can overwrite it  
+import both css and js to use, if you don't like the default css, you can overwrite it by yourself
+
 DO NOT VISIT METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
+<link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
 <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
 <script>
     alerting.alert();
@@ -22,14 +23,14 @@ import with es6 module, keep in mind that you also need css imported
 ```js
 // each call will create an object, and each of them has a standalone DOM
 // every call will show a standalone model
-import { alert as $alert, prompt as $prompt, confirm as $confirm } from "./dist/alerting.js";
+import { alert as $alert, prompt as $prompt, confirm as $confirm } from "./dist/alerting.min.js";
 $alert();
 $prompt().then(console.log);
 $confirm().then(console.log);
 
 // only create single object, and each of them shares the same DOM
 // if called twice time, the former one will be forced close
-import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+import { Alert, Prompt, Confirm } from "./dist/alerting.min.js";
 const alert = new Alert();
 const confirm = new Confirm();
 const prompt = new Prompt();

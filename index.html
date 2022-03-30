@@ -5,10 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Alerting.js</title>
-        <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
+        <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
         <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
         <script type="module">
-            import { Alert, Prompt, Confirm } from "https://unpkg.com/alerting.js/dist/alerting.js";
+            import { Alert, Prompt, Confirm } from "https://unpkg.com/alerting.js/dist/alerting.min.js";
             const alert = new Alert().makeMaskUnclickable();
             const confirm = new Confirm().makeMaskUnclickable();
             const prompt = new Prompt().makeMaskUnclickable();
@@ -18,11 +18,10 @@
             window.$$prompt = (text, value) => prompt.config(text, value).wait();
         </script>
         <style>
-            /* @import url(https://unpkg.com/alerting.js/dist/alerting.css); */
+            /* @import url(https://unpkg.com/alerting.js/dist/alerting.min.css); */
             html,
             body {
                 color: #424242;
-                font-weight: 300;
                 font-family: "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC",
                     "WenQuanYi Micro Hei", "sans-serif";
                 font-size: 16px;
