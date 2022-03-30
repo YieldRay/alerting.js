@@ -7,10 +7,8 @@
         <title>Alerting.js</title>
         <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
         <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
-        <!-- <link rel="stylesheet" href="./dist/alerting.css" />
-        <script src="./dist/alerting.umd.min.js"></script> -->
         <script type="module">
-            import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+            import { Alert, Prompt, Confirm } from "https://unpkg.com/alerting.js/dist/alerting.js";
             const alert = new Alert().makeMaskUnclickable();
             const confirm = new Confirm().makeMaskUnclickable();
             const prompt = new Prompt().makeMaskUnclickable();
@@ -19,6 +17,22 @@
             window.$$confirm = (msg) => confirm.config(msg).wait();
             window.$$prompt = (text, value) => prompt.config(text, value).wait();
         </script>
+        <style>
+            /* @import url(https://unpkg.com/alerting.js/dist/alerting.css); */
+            html,
+            body {
+                color: #424242;
+                font-weight: 300;
+                font-family: "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC",
+                    "WenQuanYi Micro Hei", "sans-serif";
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 4rem;
+                margin: 0;
+            }
+        </style>
     </head>
     <body>
         <h1>Alerting.js</h1>

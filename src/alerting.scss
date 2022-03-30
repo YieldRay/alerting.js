@@ -85,21 +85,23 @@
     }
 }
 
-@media screen and (max-width: 48rem) {
+@media screen and (max-width: 80rem) {
     .alerting-model {
-        min-width: 80vw;
+        min-width: 60vw;
         min-height: 20vh;
     }
 }
+
 @media screen and (max-width: 60rem) {
     .alerting-model {
         min-width: 70vw;
         min-height: 20vh;
     }
 }
-@media screen and (max-width: 80rem) {
+
+@media screen and (max-width: 48rem) {
     .alerting-model {
-        min-width: 60vw;
+        min-width: 80vw;
         min-height: 20vh;
     }
 }
@@ -108,9 +110,11 @@
 .alerting-mask {
     animation: alerting-fade-in 0.2s;
 }
-.alerting-animation-close{
+
+.alerting-animation-close {
     animation: alerting-fade-out 0.2s forwards;
 }
+
 @keyframes alerting-fade-in {
     from {
         opacity: 0;
@@ -119,6 +123,7 @@
         opacity: 1;
     }
 }
+
 @keyframes alerting-fade-out {
     from {
         opacity: 1;

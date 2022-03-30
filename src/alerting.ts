@@ -128,6 +128,7 @@ class Alert extends Model {
 
     public async wait(): Promise<void> {
         await this._open();
+        this._buttonConfirm.focus();
         return await new Promise((resolve) => {
             if (this._isMaskClickable) {
                 this._mask.addEventListener("click", async () => {
@@ -165,6 +166,7 @@ class Confirm extends Model {
     }
     public async wait(): Promise<boolean> {
         await this._open();
+        this._buttonConfirm.focus();
         return await new Promise((resolve) => {
             if (this._isMaskClickable) {
                 this._mask.addEventListener("click", async () => {
