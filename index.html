@@ -13,9 +13,9 @@
             const confirm = new Confirm().makeMaskUnclickable();
             const prompt = new Prompt().makeMaskUnclickable();
             // only instantiate once, reduce create and destroy DOM
-            window._alert = (msg) => alert.config(msg).wait();
-            window._confirm = (msg) => confirm.config(msg).wait();
-            window._prompt = (text, value) => prompt.config(text, value).wait();
+            window.$$alert = (msg) => alert.config(msg).wait();
+            window.$$confirm = (msg) => confirm.config(msg).wait();
+            window.$$prompt = (text, value) => prompt.config(text, value).wait();
         </script>
     </head>
     <body>

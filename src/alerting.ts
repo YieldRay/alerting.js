@@ -2,7 +2,6 @@ const animationDuration = 200;
 class AlertingEvent {
     _eventTarget = new EventTarget();
     constructor() {}
-
     on(eventName: string, listener: EventListenerOrEventListenerObject): void {
         this._eventTarget.addEventListener(eventName, listener);
     }
@@ -26,7 +25,7 @@ class Model {
     protected _events = new AlertingEvent();
     public on = this._events.on.bind(this._events);
     public off = this._events.off.bind(this._events);
-    protected emit = this._events.emit.bind(this._events);
+    protected _emit = this._events.emit.bind(this._events);
     protected _display: any = {
         language: navigator.language.startsWith("zh") ? "zh" : "en",
         en: {
@@ -53,10 +52,9 @@ class Model {
     }
 
     // as the Model is the Principal, only Model is listening to the event
-    protected open(): Promise<void> {
-        // TODO: rewrite with display:none may be better
+    protected _open(): Promise<void> {
         if (this._isOpen) this.forceClose();
-        this.emit("beforeOpen");
+        this._emit("beforeOpen");
         this._mask.classList.remove("alerting-animation-close");
         this._model.classList.remove("alerting-animation-close");
         return new Promise((resolve) => {
@@ -65,14 +63,14 @@ class Model {
             // this._model.addEventListener("animationend", () => {
             setTimeout(() => {
                 this._isOpen = true;
-                this.emit("afterOpen");
+                this._emit("afterOpen");
                 resolve();
             }, animationDuration);
         });
     }
-    protected close(): Promise<boolean> {
+    protected _close(): Promise<boolean> {
         if (!this._isOpen) return Promise.resolve(false);
-        this.emit("beforeClose");
+        this._emit("beforeClose");
         return new Promise((resolve) => {
             this._mask.classList.add("alerting-animation-close");
             this._model.classList.add("alerting-animation-close");
@@ -83,7 +81,7 @@ class Model {
                 this._model.remove();
                 this._mask.remove();
                 this._isOpen = false;
-                this.emit("afterClose");
+                this._emit("afterClose");
                 resolve(true);
             }, animationDuration);
         });
@@ -110,7 +108,7 @@ class Model {
         this._model.remove();
         this._mask.remove();
         this._isOpen = false;
-        this.emit("forceClose");
+        this._emit("forceClose");
         return this;
     }
 }
@@ -130,16 +128,16 @@ class Alert extends Model {
     }
 
     public async wait(): Promise<void> {
-        await this.open();
+        await this._open();
         return await new Promise((resolve) => {
             if (this._isMaskClickable) {
                 this._mask.addEventListener("click", async () => {
-                    await this.close();
+                    await this._close();
                     resolve();
                 });
             }
             this._buttonConfirm.addEventListener("click", async () => {
-                await this.close();
+                await this._close();
                 resolve();
             });
             this.on("forceClose", () => {
@@ -167,20 +165,20 @@ class Confirm extends Model {
         return this;
     }
     public async wait(): Promise<boolean> {
-        await this.open();
+        await this._open();
         return await new Promise((resolve) => {
             if (this._isMaskClickable) {
                 this._mask.addEventListener("click", async () => {
-                    await this.close();
+                    await this._close();
                     resolve(false);
                 });
             }
             this._buttonConfirm.addEventListener("click", async () => {
-                await this.close();
+                await this._close();
                 resolve(true);
             });
             this._buttonCancel.addEventListener("click", async () => {
-                await this.close();
+                await this._close();
                 resolve(false);
             });
             this.on("forceClose", () => {
@@ -215,7 +213,7 @@ class Prompt extends Model {
         return this;
     }
     public async wait(): Promise<string | null> {
-        await this.open();
+        await this._open();
         // after the button is available, the input can be focused
         this._input.focus();
         this._input.select();
@@ -227,16 +225,16 @@ class Prompt extends Model {
         return await new Promise<string | null>((resolve) => {
             if (this._isMaskClickable) {
                 this._mask.addEventListener("click", async () => {
-                    await this.close();
+                    await this._close();
                     resolve(null);
                 });
             }
             this._buttonConfirm.addEventListener("click", async () => {
-                await this.close();
+                await this._close();
                 resolve(this._input.value);
             });
             this._buttonCancel.addEventListener("click", async () => {
-                await this.close();
+                await this._close();
                 resolve(null);
             });
             this.on("forceClose", () => {
