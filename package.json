@@ -1,14 +1,14 @@
 {
     "name": "alerting.js",
-    "version": "0.1.4",
+    "version": "0.1.6",
     "description": "implement alert, confirm, prompt with Promise",
-    "main": "./dist/alerting.js",
+    "main": "./dist/alerting.min.js",
     "scripts": {
         "dev:css": "sass --watch src:dist",
         "dev:js": "tsc -w",
         "build": "npm run build:scss && tsc && npm run build:rollup && npm run minify",
         "build:scss": "sass src:dist --no-source-map",
-        "build:rollup": "rollup dist/alerting.js --file dist/alerting.umd.js --format umd  --name 'alerting'",
+        "build:rollup": "rollup dist/alerting.js --file dist/alerting.umd.js --format umd --name 'alerting'",
         "build:terser": "terser dist/alerting.umd.js -c ecma=2015 -o dist/alerting.umd.min.js && terser dist/alerting.js -c ecma=2015 -o dist/alerting.min.js",
         "minify": "postcss dist/alerting.css -o dist/alerting.min.css --no-source-map && npm run build:terser"
     },
@@ -25,12 +25,12 @@
     "homepage": "https://github.com/YieldRay/alerting.js#readme",
     "devDependencies": {
         "autoprefixer": "^10.4.2",
-        "cssnano": "^5.0.15",
-        "postcss": "^8.4.5",
+        "cssnano": "^5.1.0",
+        "postcss": "^8.4.7",
         "postcss-cli": "^9.1.0",
-        "postcss-preset-env": "^7.2.0",
+        "postcss-preset-env": "^7.4.2",
         "rollup": "^2.70.1",
-        "sass": "^1.47.0",
+        "sass": "^1.49.9",
         "terser": "^5.12.1",
         "typescript": "^4.6.3"
     }

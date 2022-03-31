@@ -1,10 +1,12 @@
 # alerting.js
 
-implement alert, confirm, prompt with Promise
+implement alert, confirm, prompt with Promise  
+[![](https://img.shields.io/npm/v/alerting.js)](https://www.npmjs.com/package/dler)
+[![](https://badgen.net/packagephobia/install/alerting.js)](https://packagephobia.com/result?p=dler)
 
 ## Usage
 
-import both css and js to use, if you don't like the default css, you can overwrite it by yourself
+import both css and js to use, if you don't like the default css, you can override it by yourself
 
 DO NOT VISIT METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
@@ -12,9 +14,17 @@ DO NOT VISIT METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
 <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
 <script>
-    alerting.alert();
-    alerting.prompt("Are you sure?").then(console.log);
-    alerting.confirm("Choose your favorite number...", "0").then(console.log);
+    // use Promise with .then()
+    alerting.confirm("Are you sure?").then((bool) => {
+        if (bool) alerting.alert("OK, I will do that");
+        else alerting.alert("Will, canceled");
+    });
+    (async () => {
+        // use async/await
+        let resp = await alerting.prompt("How are you?");
+        if (resp == null) alerting.alert("You didn't answer");
+        else alerting.alert("You answered" + resp);
+    })();
 </script>
 ```
 
@@ -42,7 +52,7 @@ window.$$prompt = (text, value) => prompt.config(text, value).wait();
 public functions
 
 ```js
-new Alert().makeMaskUnclickable().wait(); // alert "Hello", but the mask is unable to click
+new Alert("Hello").makeMaskUnclickable().wait(); // alert "Hello", but the mask is unable to click
 
 const myModel = new Confirm("Quit?");
 myModel.config("Do you want to quit?"); // use config() to reset the message, return this
