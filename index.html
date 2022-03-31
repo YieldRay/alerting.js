@@ -7,18 +7,7 @@
         <title>Alerting.js</title>
         <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
         <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
-        <script type="module">
-            import { Alert, Prompt, Confirm } from "https://unpkg.com/alerting.js/dist/alerting.min.js";
-            const alert = new Alert().makeMaskUnclickable();
-            const confirm = new Confirm().makeMaskUnclickable();
-            const prompt = new Prompt().makeMaskUnclickable();
-            // only instantiate once, reduce create and destroy DOM
-            window.$$alert = (msg) => alert.config(msg).wait();
-            window.$$confirm = (msg) => confirm.config(msg).wait();
-            window.$$prompt = (text, value) => prompt.config(text, value).wait();
-        </script>
         <style>
-            /* @import url(https://unpkg.com/alerting.js/dist/alerting.min.css); */
             html,
             body {
                 color: #424242;
@@ -37,7 +26,7 @@
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
         <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
-        <button onclick="alerting.confirm('Do you like this?').then(e=>$$alert('You selected: '+e))">confirm</button>
-        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>$$alert('You entered: '+e))">prompt</button>
+        <button onclick="alerting.confirm('Do you like this?').then(e=>alerting.alert('You selected: '+e))">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>alerting.alert('You entered: '+e))">prompt</button>
     </body>
 </html>

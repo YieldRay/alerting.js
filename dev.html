@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Alerting.js DEV</title>
+        <script type="module">
+            window.alerting = await import("./dist/alerting.js");
+            import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+            const alert = new Alert();
+            const confirm = new Confirm();
+            const prompt = new Prompt();
+            window.$$alert = (msg) => alert.config(msg).wait();
+            window.$$confirm = (msg) => confirm.config(msg).wait();
+            window.$$prompt = (text, value) => prompt.config(text, value).wait();
+            window.myModel = new Confirm("Quit?");
+            myModel.on("beforeOpen", () => console.log("beforeOpen"));
+            myModel.on("afterOpen", () => console.log("afterOpen"));
+            myModel.on("beforeClose", () => console.log("beforeClose"));
+            myModel.on("afterClose", () => console.log("afterClose"));
+            myModel.on("forceClose", function (e) {
+                console.log("forceClose: ", e);
+                console.log(this); // nothing bound to this
+            });
+            myModel.config("Do you want to quit?"); // use config() to reset the message, return this
+            myModel
+                .setTitle("This is a Confirm Model")
+                .wait()
+                .then((e) => console.log("Response: " + e)); // use setTitle() to overwrite default title
+            setTimeout(() => window.myModel.forceClose(), 2000); // force close, and the previous wait will receive default value instantly
+        </script>
+        <style>
+            @import url(./dist/alerting.css);
+            html,
+            body {
+                color: #424242;
+                font-family: "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC",
+                    "WenQuanYi Micro Hei", "sans-serif";
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 4rem;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Alerting.js</h1>
+        <p>Quickly glance</p>
+        <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
+        <button onclick="alerting.confirm('Do you like this?').then(e=>alerting.alert('You selected: '+e))">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>alerting.alert('You entered: '+e))">prompt</button>
+    </body>
+</html>

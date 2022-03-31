@@ -42,7 +42,7 @@ window.$$prompt = (text, value) => prompt.config(text, value).wait();
 public functions
 
 ```js
-new Alert().makeMaskUnclickable().wait("Hello"); // alert "Hello", but the mask is unable to click
+new Alert().makeMaskUnclickable().wait(); // alert "Hello", but the mask is unable to click
 
 const myModel = new Confirm("Quit?");
 myModel.config("Do you want to quit?"); // use config() to reset the message, return this
@@ -54,12 +54,18 @@ let response = await myModel.wait(); // display the model and waiting for respon
 lifecycle hook
 
 ```js
-myModel.on("beforeOpen", () => console.log("before"));
-myModel.on("afterOpen", () => console.log("after"));
-myModel.on("beforeClose", () => console.log("before"));
-myModel.on("afterClose", () => console.log("after"));
+// add listener
+myModel.on("beforeOpen", () => console.log("beforeOpen"));
+myModel.on("afterOpen", () => console.log("afterOpen"));
+myModel.on("beforeClose", () => console.log("beforeClose"));
+myModel.on("afterClose", () => console.log("afterClose"));
 
+// remove listener
 myModel.off("beforeOpen", funcName);
+
+// if a model is closed by forceClose(), then beforeClose and afterClose will not be dispatched
+// but will dispatch forceClose event
+myModel.on("forceClose", () => console.log("forceClose"));
 ```
 
 all the three Classes have the same API

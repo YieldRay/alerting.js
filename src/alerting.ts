@@ -1,14 +1,14 @@
 const animationDuration = 200;
 class AlertingEvent {
-    _eventTarget = new EventTarget();
+    protected _eventTarget = new EventTarget();
     constructor() {}
-    on(eventName: string, listener: EventListenerOrEventListenerObject): void {
+    public on(eventName: string, listener: EventListenerOrEventListenerObject): void {
         this._eventTarget.addEventListener(eventName, listener);
     }
-    off(eventName: string, listener: EventListenerOrEventListenerObject): void {
+    public off(eventName: string, listener: EventListenerOrEventListenerObject): void {
         this._eventTarget.removeEventListener(eventName, listener);
     }
-    emit(eventName: string, data?: any): boolean {
+    public emit(eventName: string, data?: any): boolean {
         return this._eventTarget.dispatchEvent(new CustomEvent(eventName, { detail: data }));
     }
 }
@@ -197,10 +197,10 @@ class Prompt extends Modal {
     constructor(text: string = "", value?: string) {
         super();
         this._textNode.nodeValue = text;
-        this._content.appendChild(this._textNode);
+        this._content.appendChild(this._textNode); // set text
         this._input.className = "alerting-input";
         this._input.value = value || "";
-        this._content.appendChild(this._input);
+        this._content.appendChild(this._input); // set input
         this._buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         this._buttonConfirm.className = "alerting-button-confirm";
         this._buttonCancel.innerHTML = this._display[this._display.language].cancel;
