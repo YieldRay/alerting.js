@@ -1,14 +1,14 @@
 # alerting.js
 
 implement alert, confirm, prompt with Promise  
-[![](https://img.shields.io/npm/v/alerting.js)](https://www.npmjs.com/package/dler)
-[![](https://badgen.net/packagephobia/install/alerting.js)](https://packagephobia.com/result?p=dler)
+[![](https://img.shields.io/npm/v/alerting.js)](https://www.npmjs.com/package/alerting.js)
+[![](https://badgen.net/packagephobia/install/alerting.js)](https://packagephobia.com/result?p=alerting.js)
 
 ## Usage
 
 import both css and js to use, if you don't like the default css, you can override it by yourself
 
-DO NOT VISIT METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
+DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
@@ -83,6 +83,7 @@ all the three Classes have the same API
 ## build
 
 ```bash
+$ npm install
 $ npm run build
 ```
 

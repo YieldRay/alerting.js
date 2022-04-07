@@ -248,13 +248,6 @@ class Prompt extends Modal {
 const alert = (msg: string) => new Alert(msg).wait();
 const confirm = (msg: string) => new Confirm(msg).wait();
 const prompt = (text: string, value?: string) => new Prompt(text, value).wait();
-// const $alert = new Alert();
-// const $confirm = new Confirm();
-// const $prompt = new Prompt();
-// const _alert = (msg: string) => $alert.config(msg).wait();
-// const _confirm = (msg: string) => $confirm.config(msg).wait();
-// const _prompt = (text: string, value?: string) => $prompt.config(text, value).wait();
-// export { _alert, _confirm, _prompt };
 
 export { Alert, Confirm, Prompt };
 export { alert, confirm, prompt };

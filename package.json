@@ -1,16 +1,21 @@
 {
     "name": "alerting.js",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "implement alert, confirm, prompt with Promise",
-    "main": "./dist/alerting.min.js",
+    "main": "dist/alerting.umd.min.js",
+    "typings": "dist/alerting.d.ts",
+    "module": "dist/alerting.js",
+    "unpkg": "dist/alerting.umd.min.js",
+    "jsdelivr": "dist/alerting.umd.min.js",
     "scripts": {
         "dev:css": "sass --watch src:dist",
         "dev:js": "tsc -w",
-        "build": "npm run build:scss && tsc && npm run build:rollup && npm run minify",
+        "build": "npm run prettier && npm run build:scss && tsc && npm run build:rollup && npm run minify",
         "build:scss": "sass src:dist --no-source-map",
         "build:rollup": "rollup dist/alerting.js --file dist/alerting.umd.js --format umd --name 'alerting'",
         "build:terser": "terser dist/alerting.umd.js -c ecma=2015 -o dist/alerting.umd.min.js && terser dist/alerting.js -c ecma=2015 -o dist/alerting.min.js",
-        "minify": "postcss dist/alerting.css -o dist/alerting.min.css --no-source-map && npm run build:terser"
+        "minify": "postcss dist/alerting.css -o dist/alerting.min.css --no-source-map && npm run build:terser",
+        "prettier": "npx prettier --write src/**/*.ts"
     },
     "repository": {
         "type": "git",
@@ -25,12 +30,13 @@
     "homepage": "https://github.com/YieldRay/alerting.js#readme",
     "devDependencies": {
         "autoprefixer": "^10.4.2",
-        "cssnano": "^5.1.0",
+        "cssnano": "^5.1.7",
         "postcss": "^8.4.7",
         "postcss-cli": "^9.1.0",
         "postcss-preset-env": "^7.4.2",
+        "prettier": "^2.6.2",
         "rollup": "^2.70.1",
-        "sass": "^1.49.9",
+        "sass": "^1.49.10",
         "terser": "^5.12.1",
         "typescript": "^4.6.3"
     }

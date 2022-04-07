@@ -4,7 +4,7 @@
         "strict": true,
         "declaration": true,
         "sourceMap": true,
-        "declarationDir": "dist",
+        "declarationDir": "types",
         "outDir": "dist",
         "removeComments": true,
         "experimentalDecorators": true,
