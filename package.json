@@ -1,27 +1,35 @@
 {
     "name": "alerting.js",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "description": "implement alert, confirm, prompt with Promise",
-    "main": "dist/alerting.umd.min.js",
-    "typings": "dist/alerting.d.ts",
-    "module": "dist/alerting.js",
-    "unpkg": "dist/alerting.umd.min.js",
-    "jsdelivr": "dist/alerting.umd.min.js",
+    "main": "dist/alerting.js",
+    "types": "dist/alerting.d.ts",
+    "module": "dist/alerting.module.js",
+    "umd": "dist/alerting.umd.js",
+    "unpkg": "dist/alerting.umd.js",
+    "files": [
+        "dist",
+        "src"
+    ],
     "scripts": {
         "dev:css": "sass --watch src:dist",
         "dev:js": "tsc -w",
-        "build": "npm run prettier && npm run build:scss && tsc && npm run build:rollup && npm run minify",
-        "build:scss": "sass src:dist --no-source-map",
-        "build:rollup": "rollup dist/alerting.js --file dist/alerting.umd.js --format umd --name 'alerting'",
-        "build:terser": "terser dist/alerting.umd.js -c ecma=2015 -o dist/alerting.umd.min.js && terser dist/alerting.js -c ecma=2015 -o dist/alerting.min.js",
-        "minify": "postcss dist/alerting.css -o dist/alerting.min.css --no-source-map && npm run build:terser",
+        "build": "npm run prettier && npm run build:css && npm run build:js",
+        "build:css": "sass src:dist --no-source-map && postcss dist/alerting.css -o dist/alerting.css --no-source-map",
+        "build:js": "tsc && rollup -c",
         "prettier": "npx prettier --write src/**/*.ts"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/YieldRay/alerting.js.git"
     },
-    "keywords": [],
+    "keywords": [
+        "modal",
+        "popup",
+        "alert",
+        "prompt",
+        "confirm"
+    ],
     "author": "YieldRay",
     "license": "ISC",
     "bugs": {
@@ -29,6 +37,13 @@
     },
     "homepage": "https://github.com/YieldRay/alerting.js#readme",
     "devDependencies": {
+        "@babel/plugin-transform-runtime": "^7.18.0",
+        "@babel/preset-env": "^7.18.0",
+        "@babel/runtime": "^7.18.0",
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
+        "@rollup/plugin-typescript": "^8.3.2",
         "autoprefixer": "^10.4.2",
         "cssnano": "^5.1.7",
         "postcss": "^8.4.7",
@@ -36,6 +51,7 @@
         "postcss-preset-env": "^7.4.2",
         "prettier": "^2.6.2",
         "rollup": "^2.70.1",
+        "rollup-plugin-terser": "^7.0.2",
         "sass": "^1.49.10",
         "terser": "^5.12.1",
         "typescript": "^4.6.3"

@@ -5,8 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Alerting.js</title>
-        <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
-        <script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
+        <script src="https://polyfill.io/v3/polyfill.min.js"></script>
+        <script src="https://unpkg.com/alerting.js/dist/alerting.umd.js"></script>
         <style>
             html,
             body {
@@ -15,7 +16,6 @@
                     "WenQuanYi Micro Hei", "sans-serif";
                 font-size: 16px;
             }
-
             h1 {
                 font-size: 4rem;
                 margin: 0;
@@ -26,7 +26,7 @@
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
         <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
-        <button onclick="alerting.confirm('Do you like this?').then(e=>alerting.alert('You selected: '+e))">confirm</button>
-        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>alerting.alert('You entered: '+e))">prompt</button>
+        <button onclick="alerting.confirm('Do you like this?').then(function(e){alerting.alert('You selected: '+e)})">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(function(e){alerting.alert('You entered: '+e)})">prompt</button>
     </body>
 </html>

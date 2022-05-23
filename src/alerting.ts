@@ -1,7 +1,17 @@
 const animationDuration = 200;
+
 class AlertingEvent {
-    protected _eventTarget = new EventTarget();
-    constructor() {}
+    protected _eventTarget: EventTarget | any;
+    constructor() {
+        this._eventTarget =
+            "EventTarget" in window
+                ? new EventTarget()
+                : {
+                      addEventListener() {},
+                      removeEventListener() {},
+                      dispatchEvent() {},
+                  };
+    }
     public on(eventName: string, listener: EventListenerOrEventListenerObject): void {
         this._eventTarget.addEventListener(eventName, listener);
     }
@@ -9,7 +19,7 @@ class AlertingEvent {
         this._eventTarget.removeEventListener(eventName, listener);
     }
     public emit(eventName: string, data?: any): boolean {
-        return this._eventTarget.dispatchEvent(new CustomEvent(eventName, { detail: data }));
+        return this._eventTarget.dispatchEvent(CustomEvent ? new CustomEvent(eventName, { detail: data }) : undefined);
     }
 }
 

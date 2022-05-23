@@ -11,11 +11,14 @@ import both css and js to use, if you don't like the default css, you can overri
 DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.min.css" />
-<script src="https://unpkg.com/alerting.js/dist/alerting.umd.min.js"></script>
+<!-- provide basic support for IE11 only if you have the environment patched -->
+<script src="https://polyfill.io/v3/polyfill.min.js"></script>
+<!-- remove above script if you do not need to support IE -->
+<link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
+<script src="https://unpkg.com/alerting.js/dist/alerting.umd.js"></script>
 <script>
     // use Promise with .then()
-    alerting.confirm("Are you sure?").then((bool) => {
+    alerting.confirm("Are you sure?").then(function (bool) {
         if (bool) alerting.alert("OK, I will do that");
         else alerting.alert("Will, canceled");
     });
@@ -28,19 +31,19 @@ DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 </script>
 ```
 
-import with es6 module, keep in mind that you also need css imported
+import with es6 module (for chrome>=61), keep in mind that **you also need to import css**
 
 ```js
 // each call will create an object, and each of them has a standalone DOM
 // every call will show a standalone model
-import { alert as $alert, prompt as $prompt, confirm as $confirm } from "./dist/alerting.min.js";
+import { alert as $alert, prompt as $prompt, confirm as $confirm } from "./dist/alerting.module.js";
 $alert();
 $prompt().then(console.log);
 $confirm().then(console.log);
 
 // only create single object, and each of them shares the same DOM
 // if called twice time, the former one will be forced close
-import { Alert, Prompt, Confirm } from "./dist/alerting.min.js";
+import { Alert, Prompt, Confirm } from "./dist/alerting.module.js";
 const alert = new Alert();
 const confirm = new Confirm();
 const prompt = new Prompt();
@@ -61,7 +64,7 @@ myModel.forceClose(); // force close, and the previous wait will receive default
 let response = await myModel.wait(); // display the model and waiting for response
 ```
 
-lifecycle hook
+lifecycle hook (only available if window.EventTarget is provided)
 
 ```js
 // add listener
