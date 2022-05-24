@@ -1,27 +1,71 @@
-const animationDuration = 200;
+(function (arr) {
+    //https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+    arr.forEach(function (item) {
+        if (item.hasOwnProperty("remove")) {
+            return;
+        }
+        Object.defineProperty(item, "remove", {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+                this.parentNode.removeChild(this);
+            },
+        });
+    });
+})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
-class AlertingEvent {
-    protected _eventTarget: EventTarget | any;
-    constructor() {
-        this._eventTarget =
-            "EventTarget" in window
-                ? new EventTarget()
-                : {
-                      addEventListener() {},
-                      removeEventListener() {},
-                      dispatchEvent() {},
-                  };
-    }
-    public on(eventName: string, listener: EventListenerOrEventListenerObject): void {
-        this._eventTarget.addEventListener(eventName, listener);
-    }
-    public off(eventName: string, listener: EventListenerOrEventListenerObject): void {
-        this._eventTarget.removeEventListener(eventName, listener);
-    }
-    public emit(eventName: string, data?: any): boolean {
-        return this._eventTarget.dispatchEvent(CustomEvent ? new CustomEvent(eventName, { detail: data }) : undefined);
+class SimpleCustomEvent {
+    type: string;
+    data: any;
+    constructor(type: string, data: any) {
+        this.type = type;
+        this.data = data;
     }
 }
+
+class SimpleEventTarget {
+    _listener_map: { [type: string]: Function[] } = {};
+    addEventListener(type: string, listener: Function) {
+        if (!this._listener_map[type]) {
+            this._listener_map[type] = [];
+        }
+        this._listener_map[type].push(listener);
+    }
+    removeEventListener(type: string, listener: Function) {
+        if (!this._listener_map[type]) return;
+        const index = this._listener_map[type].indexOf(listener);
+        if (index > -1) this._listener_map[type].splice(index, 1);
+    }
+    dispatchEvent(event: CustomEvent | SimpleCustomEvent) {
+        if (!this._listener_map[event.type]) return true;
+        this._listener_map[event.type].forEach((listener) => {
+            typeof listener === "function" && listener(event);
+        });
+        return true; // always true because no preventDefault()
+    }
+}
+
+class AlertingEvent {
+    protected _eventTarget: EventTarget | SimpleEventTarget;
+    constructor() {
+        this._eventTarget = "EventTarget" in window ? new EventTarget() : new SimpleEventTarget();
+    }
+    public on(eventName: string, listener: Function): void {
+        this._eventTarget.addEventListener(eventName, listener as EventListener);
+    }
+    public off(eventName: string, listener: Function): void {
+        this._eventTarget.removeEventListener(eventName, listener as EventListener);
+    }
+    public emit(eventName: string, data?: any): boolean {
+        return this._eventTarget.dispatchEvent(
+            "EventTarget" in window ? new CustomEvent(eventName, { detail: data }) : (new SimpleCustomEvent(eventName, { detail: data }) as any as CustomEvent)
+        );
+    }
+}
+// patch event for lifecycle hook
+
+const animationDuration = 200;
 
 class Modal {
     // the modal has: title, content, buttons

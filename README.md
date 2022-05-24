@@ -6,12 +6,16 @@ implement alert, confirm, prompt with Promise
 
 ## Usage
 
+## browser (umd)
+
 import both css and js to use, if you don't like the default css, you can override it by yourself
 
 DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
-<!-- provide basic support for IE11 only if you have the environment patched -->
+<!-- support IE11 only if you have Promise in global -->
+<script src="https://unpkg.com/promise-polyfill@8/dist/polyfill.min.js"></script>
+<!-- or -->
 <script src="https://polyfill.io/v3/polyfill.min.js"></script>
 <!-- remove above script if you do not need to support IE -->
 <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
@@ -30,6 +34,8 @@ DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
     })();
 </script>
 ```
+
+## browser (module)
 
 import with es6 module (for chrome>=61), keep in mind that **you also need to import css**
 
@@ -52,6 +58,14 @@ window.$$confirm = (msg) => confirm.config(msg).wait();
 window.$$prompt = (text, value) => prompt.config(text, value).wait();
 ```
 
+## node.js
+
+```sh
+$ npm install alerting.js
+```
+
+## addtional
+
 public functions
 
 ```js
@@ -64,7 +78,7 @@ myModel.forceClose(); // force close, and the previous wait will receive default
 let response = await myModel.wait(); // display the model and waiting for response
 ```
 
-lifecycle hook (only available if window.EventTarget is provided)
+lifecycle hook
 
 ```js
 // add listener
@@ -83,14 +97,14 @@ myModel.on("forceClose", () => console.log("forceClose"));
 
 all the three Classes have the same API
 
-## build
+# build
 
 ```bash
 $ npm install
 $ npm run build
 ```
 
-## dev
+# dev
 
 ```bash
 $ npm run dev:js
