@@ -1,5 +1,6 @@
 (function (arr) {
-    //https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+    // polyfill for .remove()
+    // https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
     arr.forEach(function (item) {
         if (item.hasOwnProperty("remove")) {
             return;
@@ -65,12 +66,19 @@ class AlertingEvent {
 }
 // patch event for lifecycle hook
 
-const animationDuration = 200;
+const animationDuration = 200; // ms, animation duration as a substitute for animation end event
+
+function replaceContent(el: HTMLElement, content: string, renderAsHTML = false) {
+    el.innerHTML = "";
+    if (renderAsHTML) el.innerHTML = content;
+    else el.appendChild(document.createTextNode(content));
+}
 
 class Modal {
     // the modal has: title, content, buttons
     protected _isOpen = false;
     protected _isMaskClickable = true;
+    protected _isRenderAsHTML = false;
     protected _mask = document.createElement("div");
     protected _modal = document.createElement("div");
     protected _title = document.createElement("div");
@@ -105,7 +113,7 @@ class Modal {
         this._modal.appendChild(this._buttons);
     }
 
-    // as the modal is the Principal, only modal is listening to the event
+    // as the modal is the principal, only modal is listening to the event
     protected _open(): Promise<void> {
         if (this._isOpen) this.forceClose();
         this._emit("beforeOpen");
@@ -139,21 +147,23 @@ class Modal {
             }, animationDuration);
         });
     }
-    /*
-     * @description make the modal mask unable to clickable, chained calls this fucntion
-     */
-    public makeMaskUnclickable(): this {
-        this._isMaskClickable = false;
-        return this;
-    }
 
-    /*
+    /**
      * @description set the title of the modal, if not set, the title will be the hostname just like the native style
      */
     public setTitle(title: string): this {
-        this._title.innerHTML = title;
+        replaceContent(this._title, title, this._isRenderAsHTML);
         return this;
     }
+
+    public settings(options: { maskClickable?: boolean; renderAsHTML?: boolean; title?: string }): this {
+        if (typeof options !== "object") throw new TypeError("options must be an object");
+        if (typeof options.renderAsHTML !== "undefined") this._isRenderAsHTML = Boolean(options.renderAsHTML);
+        this._isMaskClickable = Boolean(options.maskClickable);
+        if (options.title) this.setTitle(options.title);
+        return this;
+    }
+
     /**
      * @description force close and dispatch the event, the remaining await will receive default value instantly
      */
@@ -170,13 +180,14 @@ class Alert extends Modal {
     private _buttonConfirm = document.createElement("button");
     constructor(message: string = "") {
         super();
-        this._content.innerHTML = message;
+        replaceContent(this._content, message, this._isRenderAsHTML);
         this._buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         this._buttonConfirm.className = "alerting-button-confirm";
         this._buttons.appendChild(this._buttonConfirm);
     }
-    public config(message: string = ""): Alert {
-        this._content.innerHTML = message;
+
+    public setContent(message: string): Alert {
+        replaceContent(this._content, message, this._isRenderAsHTML);
         return this;
     }
 
@@ -206,7 +217,7 @@ class Confirm extends Modal {
     private _buttonCancel = document.createElement("button");
     constructor(message: string = "") {
         super();
-        this._content.innerHTML = message;
+        replaceContent(this._content, message, this._isRenderAsHTML);
         this._buttonConfirm.innerHTML = this._display[this._display.language].confirm;
         this._buttonConfirm.className = "alerting-button-confirm";
         this._buttonCancel.innerHTML = this._display[this._display.language].cancel;
@@ -214,10 +225,12 @@ class Confirm extends Modal {
         this._buttons.appendChild(this._buttonConfirm);
         this._buttons.appendChild(this._buttonCancel);
     }
-    public config(message: string = ""): Confirm {
-        this._content.innerHTML = message;
+
+    public setContent(message: string): Confirm {
+        replaceContent(this._content, message, this._isRenderAsHTML);
         return this;
     }
+
     public async wait(): Promise<boolean> {
         await this._open();
         this._buttonConfirm.focus();
@@ -262,11 +275,13 @@ class Prompt extends Modal {
         this._buttons.appendChild(this._buttonConfirm);
         this._buttons.appendChild(this._buttonCancel);
     }
-    public config(text: string = "", value?: string): Prompt {
+
+    public setContent(text: string, value?: string): Prompt {
         this._textNode.nodeValue = text;
         this._input.value = value || "";
         return this;
     }
+
     public async wait(): Promise<string | null> {
         await this._open();
         // after the button is available, the input can be focused

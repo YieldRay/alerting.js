@@ -6,6 +6,8 @@ implement alert, confirm, prompt with Promise
 
 ## Usage
 
+while this library is v0.x.x, you should at least specify v0.[number].x to avoid changes in API
+
 ## browser (umd)
 
 import both css and js to use, if you don't like the default css, you can override it by yourself
@@ -53,9 +55,9 @@ import { Alert, Prompt, Confirm } from "./dist/alerting.module.js";
 const alert = new Alert();
 const confirm = new Confirm();
 const prompt = new Prompt();
-window.$$alert = (msg) => alert.config(msg).wait();
-window.$$confirm = (msg) => confirm.config(msg).wait();
-window.$$prompt = (text, value) => prompt.config(text, value).wait();
+window.$$alert = (msg) => alert.setContent(msg).wait();
+window.$$confirm = (msg) => confirm.setContent(msg).wait();
+window.$$prompt = (text, value) => prompt.setContent(text, value).wait();
 ```
 
 ## node.js
@@ -69,11 +71,16 @@ $ npm install alerting.js
 public functions
 
 ```js
-new Alert("Hello").makeMaskUnclickable().wait(); // alert "Hello", but the mask is unable to click
+new Alert("<h3>Hello</h3>").settings({ maskClickable: false, renderAsHTML: true }).wait();
+// alert "Hello", but the mask is unable to click, while the title and content will be rendered as HTML
+// renderAsHTML only works before setContent() is called
+// while renderAsHTML is default to false, the text passed in the constructor will be rendered as textNode
+// so normally if you want to render some HTML, you should call:
+new Alert().settings({ renderAsHTML: true }).setContent(html);
 
 const myModel = new Confirm("Quit?");
-myModel.config("Do you want to quit?"); // use config() to reset the message, return this
 myModel.setTitle("This is a Confirm Model").wait().then(alert); // use setTitle() to overwrite default title
+myModel.setContent("Do you want to quit?"); // use setContent() to reset the message, return this
 myModel.forceClose(); // force close, and the previous wait will receive default value instantly
 let response = await myModel.wait(); // display the model and waiting for response
 ```
@@ -95,7 +102,8 @@ myModel.off("beforeOpen", funcName);
 myModel.on("forceClose", () => console.log("forceClose"));
 ```
 
-all the three Classes have the same API
+all the three Classes have the same API  
+as we illustrated Alert for example, it also works in Prompt and Confirm
 
 # build
 

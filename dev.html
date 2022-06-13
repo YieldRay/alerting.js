@@ -8,12 +8,15 @@
         <script type="module">
             window.alerting = await import("./dist/alerting.js");
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
+
             const alert = new Alert();
             const confirm = new Confirm();
             const prompt = new Prompt();
-            window.$$alert = (msg) => alert.config(msg).wait();
-            window.$$confirm = (msg) => confirm.config(msg).wait();
-            window.$$prompt = (text, value) => prompt.config(text, value).wait();
+
+            window.$$alert = (msg) => alert.setContent(msg).wait();
+            window.$$confirm = (msg) => confirm.setContent(msg).wait();
+            window.$$prompt = (text, value) => prompt.setContent(text, value).wait();
+
             window.myModel = new Confirm("Quit?");
             myModel.on("beforeOpen", () => console.log("beforeOpen"));
             myModel.on("afterOpen", () => console.log("afterOpen"));
@@ -23,9 +26,12 @@
                 console.log("forceClose: ", e);
                 console.log(this); // nothing bound to this
             });
-            myModel.config("Do you want to quit?"); // use config() to reset the message, return this
+
+            // as setContent is called, the text is actually rendered in the DOM, so settings should called before that to change the behavior
+            myModel.setContent("<h1>Do you want to quit?</h1>"); // use config() to reset the message, return this
             myModel
-                .setTitle("This is a Confirm Model")
+                .settings({ maskClickable: false, renderAsHTML: true })
+                .setTitle("<span style=color:red>This is a Confirm Model</span>")
                 .wait()
                 .then((e) => console.log("Response: " + e)); // use setTitle() to overwrite default title
             setTimeout(() => window.myModel.forceClose(), 2000); // force close, and the previous wait will receive default value instantly
