@@ -1,10 +1,10 @@
 {
     "name": "alerting.js",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "implement alert, confirm, prompt with Promise",
     "main": "dist/alerting.js",
     "types": "dist/alerting.d.ts",
-    "module": "dist/alerting.module.js",
+    "module": "dist/alerting.js",
     "umd": "dist/alerting.umd.js",
     "unpkg": "dist/alerting.umd.js",
     "files": [
@@ -13,10 +13,10 @@
     ],
     "scripts": {
         "dev:css": "sass --watch src:dist",
-        "dev:js": "tsc -w",
-        "build": "npm run prettier && npm run build:css && npm run build:js",
+        "dev:js": "npx tsc -w",
+        "build": "npm run prettier && npx tsc && npm run build:css && npm run build:js",
         "build:css": "sass src:dist --no-source-map && postcss dist/alerting.css -o dist/alerting.css --no-source-map",
-        "build:js": "tsc --project tsconfig.dev.json && rollup -c",
+        "build:js": "rollup -c",
         "prettier": "npx prettier --write src/**/*.ts"
     },
     "repository": {
@@ -37,19 +37,25 @@
     },
     "homepage": "https://github.com/YieldRay/alerting.js#readme",
     "devDependencies": {
-        "@rollup/plugin-babel": "^5.3.1",
-        "@rollup/plugin-commonjs": "^22.0.1",
-        "@rollup/plugin-node-resolve": "^13.3.0",
-        "@rollup/plugin-typescript": "^8.3.3",
-        "autoprefixer": "^10.4.2",
-        "cssnano": "^5.1.9",
-        "postcss": "^8.4.14",
-        "postcss-cli": "^10.0.0",
-        "postcss-preset-env": "^7.7.2",
-        "prettier": "^2.7.1",
-        "rollup": "^2.77.1",
-        "rollup-plugin-terser": "^7.0.2",
-        "sass": "^1.54.0",
-        "typescript": "^4.7.4"
+        "@babel/core": "^7.20.12",
+        "@babel/plugin-transform-runtime": "^7.19.6",
+        "@babel/preset-env": "^7.20.2",
+        "@babel/runtime": "^7.20.7",
+        "@rollup/plugin-babel": "^6.0.3",
+        "@rollup/plugin-commonjs": "^24.0.0",
+        "@rollup/plugin-node-resolve": "^15.0.1",
+        "@rollup/plugin-terser": "^0.3.0",
+        "@rollup/plugin-typescript": "^11.0.0",
+        "autoprefixer": "^10.4.13",
+        "cssnano": "^5.1.14",
+        "postcss": "^8.4.21",
+        "postcss-cli": "^10.1.0",
+        "postcss-preset-env": "^7.8.3",
+        "prettier": "^2.8.2",
+        "rollup": "^3.9.1",
+        "sass": "^1.57.1"
+    },
+    "dependencies": {
+        "core-js": "^3.27.1"
     }
 }

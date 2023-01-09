@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Alerting.js DEV</title>
+        <script src="./dist/alerting.umd.js"></script>
         <script type="module">
-            window.alerting = await import("./dist/alerting.js");
             import { Alert, Prompt, Confirm } from "./dist/alerting.js";
 
             const alert = new Alert();
@@ -55,7 +55,7 @@
         <h1>Alerting.js</h1>
         <p>Quickly glance</p>
         <button onclick="alerting.alert('Hello, alerting.js!')">alert</button>
-        <button onclick="alerting.confirm('Do you like this?').then(e=>alerting.alert('You selected: '+e))">confirm</button>
-        <button onclick="alerting.prompt('Give me some text!','hello?').then(e=>alerting.alert('You entered: '+e))">prompt</button>
+        <button onclick="alerting.confirm('Do you like this?').then(function(e){alerting.alert('You selected: '+e)})">confirm</button>
+        <button onclick="alerting.prompt('Give me some text!','hello?').then(function(e){alerting.alert('You entered: '+e)})">prompt</button>
     </body>
 </html>

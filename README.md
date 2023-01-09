@@ -8,18 +8,14 @@ implement alert, confirm, prompt with Promise
 
 while this library is v0.x.x, you should at least specify v0.[number].x to avoid changes in API
 
-## browser (umd)
+## browser (UMD)
 
-import both css and js to use, if you don't like the default css, you can override it by yourself
+the UMD version is for those who does not have a bundler  
+this version includes polyfill and can be used in IE11 without any additional steps  
+so if you have a bundler and needn't polyfill, skip this and read next chapter
 
-DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 
 ```html
-<!-- support IE11 only if you have Promise in global -->
-<script src="https://unpkg.com/promise-polyfill@8/dist/polyfill.min.js"></script>
-<!-- or -->
-<script src="https://polyfill.io/v3/polyfill.min.js"></script>
-<!-- remove above script if you do not need to support IE -->
 <link rel="stylesheet" href="https://unpkg.com/alerting.js/dist/alerting.css" />
 <script src="https://unpkg.com/alerting.js/dist/alerting.umd.js"></script>
 <script>
@@ -37,33 +33,35 @@ DO NOT ACCESS METHODS AND PROPERTIES WHOSE NAME STARTS WITH '\_' IN ALERTING.JS
 </script>
 ```
 
-## browser (module)
+## node.js
 
-import with es6 module (for chrome>=61), keep in mind that **you also need to import css**
+```sh
+$ npm install alerting.js
+```
+
+keep in mind that **you also need to import css**
+
+```js
+import "alerting.js/dist/alerting.css";
+```
 
 ```js
 // each call will create an object, and each of them has a standalone DOM
 // every call will show a standalone model
-import { alert as $alert, prompt as $prompt, confirm as $confirm } from "./dist/alerting.module.js";
+import { alert as $alert, prompt as $prompt, confirm as $confirm } from "alerting.js";
 $alert();
 $prompt().then(console.log);
 $confirm().then(console.log);
 
 // only create single object, and each of them shares the same DOM
 // if called twice time, the former one will be forced close
-import { Alert, Prompt, Confirm } from "./dist/alerting.module.js";
+import { Alert, Prompt, Confirm } from "alerting.js";
 const alert = new Alert();
 const confirm = new Confirm();
 const prompt = new Prompt();
 window.$$alert = (msg) => alert.setContent(msg).wait();
 window.$$confirm = (msg) => confirm.setContent(msg).wait();
 window.$$prompt = (text, value) => prompt.setContent(text, value).wait();
-```
-
-## node.js
-
-```sh
-$ npm install alerting.js
 ```
 
 ## addtional
