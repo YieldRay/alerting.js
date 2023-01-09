@@ -1,6 +1,6 @@
 {
     "name": "alerting.js",
-    "version": "0.3.2",
+    "version": "0.3.4",
     "description": "implement alert, confirm, prompt with Promise",
     "main": "dist/alerting.js",
     "types": "dist/alerting.d.ts",
@@ -37,25 +37,23 @@
     },
     "homepage": "https://github.com/YieldRay/alerting.js#readme",
     "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/plugin-transform-runtime": "^7.19.6",
-        "@babel/preset-env": "^7.20.2",
-        "@babel/runtime": "^7.20.7",
-        "@rollup/plugin-babel": "^6.0.3",
-        "@rollup/plugin-commonjs": "^24.0.0",
-        "@rollup/plugin-node-resolve": "^15.0.1",
+        "@babel/core": "^7.23.2",
+        "@babel/plugin-transform-runtime": "^7.23.2",
+        "@babel/preset-env": "^7.23.2",
+        "@babel/runtime": "^7.23.2",
+        "@rollup/plugin-babel": "^6.0.4",
+        "@rollup/plugin-commonjs": "^24.1.0",
+        "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-terser": "^0.3.0",
-        "@rollup/plugin-typescript": "^11.0.0",
-        "autoprefixer": "^10.4.13",
-        "cssnano": "^5.1.14",
-        "postcss": "^8.4.21",
+        "@rollup/plugin-typescript": "^11.1.5",
+        "autoprefixer": "^10.4.16",
+        "core-js": "^3.33.2",
+        "cssnano": "^5.1.15",
+        "postcss": "^8.4.31",
         "postcss-cli": "^10.1.0",
         "postcss-preset-env": "^7.8.3",
-        "prettier": "^2.8.2",
-        "rollup": "^3.9.1",
-        "sass": "^1.57.1"
-    },
-    "dependencies": {
-        "core-js": "^3.27.1"
+        "prettier": "^2.8.8",
+        "rollup": "^3.29.4",
+        "sass": "^1.69.5"
     }
 }
