@@ -64,7 +64,7 @@ window.$$confirm = (msg) => confirm.setContent(msg).wait();
 window.$$prompt = (text, value) => prompt.setContent(text, value).wait();
 ```
 
-## addtional
+## additional
 
 public functions
 
